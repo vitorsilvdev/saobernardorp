@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SÃO BERNARDO RP | Oficial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script type="importmap">
+      {
+        "imports": {
+          "lucide": "https://esm.sh/lucide"
+        }
+      }
+    </script>
+
+    <style>
+        :root {
+            --primary: #FFD700;
+            --primary-glow: rgba(255, 215, 0, 0.5);
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 215, 0, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .main-logo {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+        }
+
+        .desktop-nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .desktop-nav a:hover {
+            color: var(--primary);
+        }
+
+        /* MOBILE NAV MENU */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .mobile-toggle .bar {
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .mobile-toggle.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .mobile-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-toggle.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .mobile-nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background: url('https://i.imgur.com/Jnc3xf7.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, var(--bg-black) 10%, rgba(0,0,0,0.2) 50%, var(--bg-black) 90%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* BUTTONS */
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .neon-button {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            text-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        .neon-button:hover {
+            background: var(--primary);
+            color: var(--bg-black);
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 15px auto 0;
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .epic-paragraph {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-dark);
+            padding: 2rem;
+            border-left: 4px solid var(--primary);
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* NOTICES */
+        .notices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .notice-card {
+            background: var(--bg-dark);
+            padding: 2.5rem;
+            border: 1px solid #1a1a1a;
+            transition: var(--transition);
+        }
+
+        .notice-card.highlight {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .notice-date {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .notice-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .notice-card p {
+            color: var(--text-muted);
+        }
+
+        /* RULES */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .rule-item {
+            text-align: center;
+        }
+
+        .rule-item i {
+            width: 48px;
+            height: 48px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .rule-item h4 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .rule-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* TEAM */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .team-role {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .team-name {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        /* LINKS */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2.5rem;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.1rem;
+            border: 1px solid #222;
+            transition: var(--transition);
+        }
+
+        .link-btn i {
+            width: 32px;
+            height: 32px;
+        }
+
+        .link-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.05);
+            transform: translateY(-5px);
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid #111;
+        }
+
+        .credits {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 3.2rem;
+                padding: 0 1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.8rem;
+                letter-spacing: 2px;
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-button {
+                width: 80%;
+                padding: 1rem 1.5rem;
+            }
+
+            .notices-grid, .team-grid, .links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="https://i.imgur.com/wwe9yIs.png" alt="São Bernardo RP Logo" class="main-logo">
+        </div>
+        <nav class="desktop-nav">
+            <a href="#home">Home</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#avisos">Avisos</a>
+            <a href="#regras">Regras</a>
+            <a href="#equipe">Equipe</a>
+            <a href="#links">Links</a>
+        </nav>
+        <div class="mobile-toggle" id="mobile-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <nav class="mobile-nav-links">
+            <a href="#home">Home</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#avisos">Avisos</a>
+            <a href="#regras">Regras</a>
+            <a href="#equipe">Equipe</a>
+            <a href="#links">Links</a>
+        </nav>
+    </div>
+
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="glitch-text">SÃO BERNARDO</h1>
+            <p class="hero-subtitle">VIVA SUA PRÓPRIA HISTÓRIA NO MELHOR ROLEPLAY</p>
+            <a href="#" class="cta-button neon-button">Em desenvolvimento</a>
+        </div>
+    </section>
+
+    <section id="sobre" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">SOBRE A CIDADE</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="epic-paragraph">
+                        O São Bernardo RP não é apenas um servidor, é onde a imersão atinge níveis extraordinários. Aqui, cada um escolhe moldar seu destino. Seja você um empresário de sucesso, um membro respeitado da Polícia ou alguém que opera o ilegal, a seriedade e o realismo são da nossa comunidade.
+                    </p>
+                    <p>
+                        Desenvolvido por Desenvolvedores Experientes, oferecemos sistemas exclusivos, economia balanceada e uma staff ativa pronta para garantir que sua única preocupação seja a sua vida única.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">0%</span>
+                        <span class="stat-label">Online</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">80%</span>
+                        <span class="stat-label">Imersivo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="avisos" class="section notices-section">
+        <div class="container">
+            <h2 class="section-title">MURAL DE AVISOS</h2>
+            <div class="notices-grid">
+                <div class="notice-card">
+                    <div class="notice-date">9 JAN</div>
+                    <h3>Desenvolvimento</h3>
+                    <p>Desenvolvimento da loja com dinheiro real</p>
+                </div>
+                <div class="notice-card highlight">
+                    <div class="notice-date">7 JAN</div>
+                    <h3>Recrutamento Staff Aberto</h3>
+                    <p>Estamos buscando novos membros para compor nossa equipe de suporte e moderação.</p>
+                </div>
+                <div class="notice-card">
+                    <div class="notice-date">1 JAN</div>
+                    <h3>Organizações Disponíveis</h3>
+                    <p>Corporações como PC, PRF e PM foram liberadas para serem assumidas, já Facções foram liberadas 3.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="regras" class="section rules-section">
+        <div class="container">
+            <h2 class="section-title">REGRAS GERAIS</h2>
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <i data-lucide="shield-alert"></i>
+                    <h4>RDM / VDM</h4>
+                    <p>Proibido matar ou usar veículos como arma sem motivo aparente (RP).</p>
+                </div>
+                <div class="rule-item">
+                    <i data-lucide="map-pin"></i>
+                    <h4>Safezones</h4>
+                    <p>Áreas neutras onde crimes são estritamente proibidos por regra.</p>
+                </div>
+                <div class="rule-item">
+                    <i data-lucide="skull"></i>
+                    <h4>Assaltos</h4>
+                    <p>Devem seguir os limites de valores e tempo de cooldown estabelecidos.</p>
+                </div>
+                <div class="rule-item">
+                    <i data-lucide="users"></i>
+                    <h4>Staff</h4>
+                    <p>Desrespeito ou má conduta com a equipe resultará em banimento imediato.</p>
+                </div>
+                <div class="rule-item">
+                    <i data-lucide="users"></i>
+                    <h4>Entre outras...</h4>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="equipe" class="section team-section">
+        <div class="container">
+            <h2 class="section-title">EQUIPE DE GESTÃO</h2>
+            <div class="team-grid">
+                <div class="team-card glass">
+                    <div class="team-role">CEO / FOUNDER</div>
+                    <h3 class="team-name">DV</h3>
+                </div>
+                <div class="team-card glass">
+                    <div class="team-role">RESP. STAFF</div>
+                    <h3 class="team-name">brenin_semxit</h3>
+                </div>
+                <div class="team-card glass">
+                    <div class="team-role">CRIADOR DO SITE</div>
+                    <h3 class="team-name">vhxprime.</h3>
+                </div>
+                <div class="team-card glass">
+                    <div class="team-role">DEVELOPERS</div>
+                    <h3 class="team-name">DV, TJ, Matheus</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="links" class="section links-section">
+        <div class="container">
+            <h2 class="section-title">LINKS ÚTEIS</h2>
+            <div class="links-grid">
+                <a href="https://discord.gg/rgzvHGHBXA" class="link-btn discord-btn">
+                    <i data-lucide="message-square"></i>
+                    <span>DISCORD OFICIAL</span>
+                </a>
+                <a href="https://saobernardo.erby.site/" class="link-btn shop-btn">
+                    <i data-lucide="shopping-cart"></i>
+                    <span>LOJA OFICIAL</span>
+                </a>
+                <a href="https://www.instagram.com/sao_bernardo_rp_?igsh=MW9td2J2cWdoNXYzNQ==" class="link-btn insta-btn">
+                    <i data-lucide="instagram"></i>
+                    <span>INSTAGRAM</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SÃO BERNARDO RP. Todos os direitos reservados.</p>
+            <p class="credits">Desenvolvido com foco em diversão.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { 
+            createIcons, 
+            ShieldAlert, 
+            MapPin, 
+            Skull, 
+            Users, 
+            MessageSquare, 
+            ShoppingCart, 
+            Instagram 
+        } from 'lucide';
+
+        // Initialize Lucide icons
+        createIcons({
+            icons: {
+                ShieldAlert,
+                MapPin,
+                Skull,
+                Users,
+                MessageSquare,
+                ShoppingCart,
+                Instagram
+            }
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Scroll for Nav Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                }
+            });
+        });
+
+        // Simple Scroll Animation (Reveal on Scroll)
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply reveal styles and observe
+        document.querySelectorAll('.section, .notice-card, .team-card, .rule-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+        function toggleMenu() {
+            mobileToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Audio context logic
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playInteractionSound() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        document.querySelectorAll('.cta-button, .link-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                // playInteractionSound();
+            });
+        });
+    </script>
+</body>
+</html>
